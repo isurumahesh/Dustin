@@ -22,24 +22,24 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Install dependencies
-        run: dotnet restore ./Dustin.Api/Dustin.Api.csproj
+        run: dotnet restore ./API/Dustin/Dustin.Api/Dustin.Api.csproj
 
       - name: Install dotnet-ef tool
         run: dotnet tool install --global dotnet-ef && export PATH="$PATH:/home/runner/.dotnet/tools"
 
       - name: Build
-        run: dotnet build ./Dustin.Api/Dustin.Api.csproj --configuration Release --no-restore
+        run: dotnet build ./API/Dustin/Dustin.Api/Dustin.Api.csproj --configuration Release --no-restore
 
       - name: Run Unit Tests
-        run: dotnet test ./Dustin.UnitTests/Dustin.UnitTests.csproj --configuration Release
+        run: dotnet test ./API/Dustin/Dustin.UnitTests/Dustin.UnitTests.csproj --configuration Release
 
       - name: Run Integration Tests
-        run: dotnet test ./Dustin.IntegrationTests/Dustin.IntegrationTests.csproj --configuration Release
+        run: dotnet test ./API/Dustin/Dustin.IntegrationTests/Dustin.IntegrationTests.csproj --configuration Release
 
-      - name: Run EF Core Migrations
-        run: dotnet ef database update --project ./Dustin.Infrastructure/Dustin.Infrastructure.csproj --startup-project ./Dustin.Api/Dustin.Api.csproj --context DustinDbContext
+      # - name: Run EF Core Migrations
+      #   run: dotnet ef database update --project ./API/Dustin/Dustin.Infrastructure/Dustin.Infrastructure.csproj --startup-project ./API/Dustin/Dustin.Api/Dustin.Api.csproj --context DustinDbContext
 
-      - name: Publish
-        run: dotnet publish ./Dustin.Api/Dustin.Api.csproj --configuration Release --output ./publish
+      # - name: Publish
+      #   run: dotnet publish ./Dustin.Api/Dustin.Api.csproj --configuration Release --output ./publish
 
 
