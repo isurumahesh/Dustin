@@ -1,0 +1,45 @@
+name: Deploy Dustin Api
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_WEBAPP_NAME: "Dustinapi"
+  ConnectionStrings__AzureConnectionString: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .Net Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install dependencies
+        run: dotnet restore ./Dustin.Api/Dustin.Api.csproj
+
+      - name: Install dotnet-ef tool
+        run: dotnet tool install --global dotnet-ef && export PATH="$PATH:/home/runner/.dotnet/tools"
+
+      - name: Build
+        run: dotnet build ./Dustin.Api/Dustin.Api.csproj --configuration Release --no-restore
+
+      - name: Run Unit Tests
+        run: dotnet test ./Dustin.UnitTests/Dustin.UnitTests.csproj --configuration Release
+
+      - name: Run Integration Tests
+        run: dotnet test ./Dustin.IntegrationTests/Dustin.IntegrationTests.csproj --configuration Release
+
+      - name: Run EF Core Migrations
+        run: dotnet ef database update --project ./Dustin.Infrastructure/Dustin.Infrastructure.csproj --startup-project ./Dustin.Api/Dustin.Api.csproj --context DustinDbContext
+
+      - name: Publish
+        run: dotnet publish ./Dustin.Api/Dustin.Api.csproj --configuration Release --output ./publish
+
+
