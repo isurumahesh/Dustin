@@ -1,8 +1,10 @@
-﻿namespace Dustin.Domain.Entities
+﻿using Dustin.Application.DTOs;
+
+namespace Dustin.Domain.Entities
 {
-    public class ProductItemSubFeatureDTO
+    public record ProductItemSubFeatureDTO
     {
-        public SubFeature SubFeature { get; set; }
-        public ProductItem ProductItem { get; set; }
+        public SubFeatureDTO SubFeature { get; init; }
+       // public ProductItem ProductItem { get; init; }
     }
 }

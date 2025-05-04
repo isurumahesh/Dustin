@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Modal,
@@ -51,7 +51,7 @@ const AddEditProductModal = (props: Props) => {
 
         if (name === "categoryId") {
             const subCategories = categories.find(a => a.id === value)?.subCategories;
-            setSubCategories(subCategories ? [...subCategories] : []);
+            setSubCategories(subCategories ? [...subCategories] : []);       
         }
         if (Object.keys(errors) && Object.keys(errors).includes(name!)) {
             setErrors((prevErrors: any) => ({ ...prevErrors, [name!]: undefined }));
@@ -59,7 +59,7 @@ const AddEditProductModal = (props: Props) => {
 
     };
 
-    const mapSubFeatures = useCallback((features: Feature[]) => {
+    useEffect(() => {
         let selectedSubFeatures = formData.selectedSubFeatures;
         let mappedFeatures: Feature[] = features.map((feature: Feature) => ({
             id: feature.id,
@@ -73,11 +73,7 @@ const AddEditProductModal = (props: Props) => {
         }));
 
         setMappedFeatures(mappedFeatures)
-    }, [formData.selectedSubFeatures])
-
-    useEffect(() => {
-        mapSubFeatures(features)
-    }, [props.productModalData.productId, mapSubFeatures, features])
+    }, [features, formData.selectedSubFeatures])
 
     useEffect(() => {
         setFormData(props.productModalData);
@@ -101,7 +97,6 @@ const AddEditProductModal = (props: Props) => {
             )
         );
     };
-
 
     const validateForm = () => {
         const newErrors: any = {};
@@ -138,7 +133,17 @@ const AddEditProductModal = (props: Props) => {
 
         });
 
-        props.saveProduct(formData, selectedSubfeatures)
+        let brand = brands.find(a => a.id === formData.brandId);
+        let category = categories.find(a => a.id === formData.categoryId);
+        let subCategory = subCategories?.find(a => a.id === formData.subCategoryId);
+
+        const copiedFormData = { ...formData };
+
+        copiedFormData.brand = brand!.name;
+        copiedFormData.categoryName = category!.name;
+        copiedFormData.subCategoryValue=subCategory!.value;
+
+        props.saveProduct(copiedFormData, selectedSubfeatures)
         setErrors({})
 
     }
@@ -157,10 +162,10 @@ const AddEditProductModal = (props: Props) => {
 
     useEffect(() => {
         productsApi.getFeatures().then(res => {
-            mapSubFeatures(res)
+            setFeatures(res)
         })
 
-    }, [mapSubFeatures]);
+    }, []);
 
     useEffect(() => {
         productsApi.getBrands().then(res => {

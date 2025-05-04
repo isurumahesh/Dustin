@@ -8,9 +8,31 @@ import { useMsal } from "@azure/msal-react";
 const TopBar = () => {
   const { instance } = useMsal();
 
+  // const handleLogout = async () => {
+  //   try {
+  //     await instance.logoutRedirect();
+  //   } catch (error) {
+  //     console.error("Logout failed", error);
+  //   }
+  // };
+
+  // const handleLogout = () => {
+  //   try {
+  //     instance.logoutPopup({
+  //       postLogoutRedirectUri: "/"
+  //     });
+  //     window.location.reload();
+  //   } catch (error) {
+  //     console.error("Logout failed", error);
+  //   }
+  // };
+
   const handleLogout = async () => {
     try {
-      await instance.logoutRedirect();
+      instance.getActiveAccount() && instance.setActiveAccount(null);
+      await instance.logoutRedirect({
+        postLogoutRedirectUri: "/",      
+      });
     } catch (error) {
       console.error("Logout failed", error);
     }
@@ -18,7 +40,7 @@ const TopBar = () => {
 
   return (
     <AppBar position="sticky" sx={{
-      background: "linear-gradient(to right, #0d47a1, #4a148c)", 
+      background: "linear-gradient(to right, #0d47a1, #4a148c)",
       color: "#ffffff",
     }}>
       <Toolbar>

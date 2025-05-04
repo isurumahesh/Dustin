@@ -1,9 +1,9 @@
 ﻿namespace Dustin.Application.DTOs
 {
-    public class SubCategoryDTO : BaseEntityDTO
+    public record SubCategoryDTO : BaseEntityDTO
     {
-        public string Value { get; set; }
-        public Guid CategoryId { get; set; }
-        public CategoryDTO Category { get; set; }
+        public string Value { get; init; }
+        public Guid CategoryId { get; init; }
+        public CategoryDTO Category { get; init; }
     }
 }

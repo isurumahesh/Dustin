@@ -1,4 +1,3 @@
-import axios from "axios";
 import { appSettings } from "../appSettings";
 import { Brand, Category, CreateProduct, Feature, Product, UpdateProduct } from "../types/productTypes";
 import axiosInstance from "./axiosInstance";

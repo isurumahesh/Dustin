@@ -24,7 +24,7 @@ const ProductsPage = () => {
     const [isProductsLoading, setIsProductsLoading] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; 
+    const itemsPerPage = 10;
 
     const handleSnackBarClose = (
         event: React.SyntheticEvent | Event,
@@ -39,6 +39,7 @@ const ProductsPage = () => {
 
     const handleOpenModal = () => {
         setModalOpen(true);
+        setModalData(initializeProductFormData())
         setModalTitle("Add Product")
     }
 
@@ -87,6 +88,7 @@ const ProductsPage = () => {
 
     useEffect(() => {
         setIsProductsLoading(true)
+
         productsApi.getProducts().then(res => {
             let allItems = getAllProductItems(res);
             setProducts(allItems)
@@ -156,7 +158,7 @@ const ProductsPage = () => {
         );
         return paginatedProducts;
     }
-
+ 
     return (
         <>
             {isProductsLoading ? <Box
@@ -198,7 +200,7 @@ const ProductsPage = () => {
                         </Button>
                     </Box>
 
-                    <ProductList products={getPaginatedProducts()} handleEdit={handleEdit} handleDelete={handleDelete}></ProductList>
+                    <ProductList products={getPaginatedProducts()} searchQuery={searchQuery} handleEdit={handleEdit} handleDelete={handleDelete}></ProductList>
 
                     <Pagination
                         count={Math.ceil(filteredProducts.length / itemsPerPage)}

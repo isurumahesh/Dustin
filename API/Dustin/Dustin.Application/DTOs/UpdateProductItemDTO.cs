@@ -1,11 +1,11 @@
 ﻿namespace Dustin.Application.DTOs
 {
-    public class UpdateProductItemDTO
+    public record UpdateProductItemDTO
     {
-        public Guid Id { get; set; }
-        public string Sku { get; set; }
-        public int Stock { get; set; }
-        public decimal Price { get; set; }
+        public Guid Id { get; init; }
+        public string Sku { get; init; }
+        public int Stock { get; init; }
+        public decimal Price { get; init; }
 
         public List<CreateProductSubFeatureDTO> SubFeatures { get; set; } = new();
     }

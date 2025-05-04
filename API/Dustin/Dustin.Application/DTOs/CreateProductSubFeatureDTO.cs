@@ -1,7 +1,7 @@
 ﻿namespace Dustin.Application.DTOs
 {
-    public class CreateProductSubFeatureDTO
+    public record CreateProductSubFeatureDTO
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
     }
 }

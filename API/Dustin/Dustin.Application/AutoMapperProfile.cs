@@ -8,7 +8,7 @@ namespace Dustin.Application
     {
         public AutoMapperProfile()
         {
-            CreateMap<ProductDTO, Product>().ReverseMap();
+            CreateMap<ProductDTO , Product>().ReverseMap();
             CreateMap<ProductItemDTO, ProductItem>().ReverseMap();
             CreateMap<ProductItemSubFeatureDTO, ProductItemSubFeature>().ReverseMap();
             CreateMap<BrandDTO, Brand>().ReverseMap();

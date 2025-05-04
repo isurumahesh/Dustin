@@ -71,6 +71,7 @@ const LoginButton = () => {
               mb: 4,
               color: "#757575",
             }}
+            data-testid="message"
           >
             Please log in to access your account and manage your products.
           </Typography>

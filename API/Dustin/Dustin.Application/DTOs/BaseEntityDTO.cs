@@ -1,7 +1,7 @@
 ﻿namespace Dustin.Application.DTOs
 {
-    public abstract class BaseEntityDTO
+    public record BaseEntityDTO
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
     }
 }

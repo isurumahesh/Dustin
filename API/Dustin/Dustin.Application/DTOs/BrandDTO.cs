@@ -1,7 +1,7 @@
 ﻿namespace Dustin.Application.DTOs
 {
-    public class BrandDTO : BaseEntityDTO
+    public record BrandDTO : BaseEntityDTO
     {
-        public string Name { get; set; }
+        public string Name { get; init; } = null!;
     }
 }

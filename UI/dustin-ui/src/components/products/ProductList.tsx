@@ -15,11 +15,12 @@ import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
 type Props = {
     products: ViewProductItemData[],
+    searchQuery:string,
     handleEdit: Function,
     handleDelete: Function
 }
 
-const ProductList = ({ products, handleEdit, handleDelete }: Props) => {
+const ProductList = ({ products, searchQuery, handleEdit, handleDelete }: Props) => {
 
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [productId, setProductId] = useState<string>("");
@@ -37,6 +38,22 @@ const ProductList = ({ products, handleEdit, handleDelete }: Props) => {
         setDeleteModalOpen(true)
         setProductId(id)
     }
+
+    const highlightText = (text:string) => {
+        if (!searchQuery) return text;
+      
+        const parts = text.split(new RegExp(`(${searchQuery})`, "gi"));
+        return parts.map((part, index) =>
+          part.toLowerCase() === searchQuery.toLowerCase() ? (
+            <span key={index} style={{ backgroundColor: "yellow" }}>
+              {part}
+            </span>
+          ) : (
+            part
+          )
+        );
+      };
+      
 
     return (
         <>
@@ -63,8 +80,8 @@ const ProductList = ({ products, handleEdit, handleDelete }: Props) => {
                         {products && products.map((product) => (
                             <TableRow key={product.productItemId}>
                                 <TableCell>{product.productId}</TableCell>
-                                <TableCell>{product.name}</TableCell>
-                                <TableCell>{product.description}</TableCell>
+                                <TableCell>{highlightText(product.name)}</TableCell>
+                                <TableCell>{highlightText(product.description)}</TableCell>
                                 <TableCell>{product.brand}</TableCell>
                                 <TableCell>{product.categoryName}</TableCell>
                                 <TableCell>{product.subCategoryValue}</TableCell>

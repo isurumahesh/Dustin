@@ -46,6 +46,7 @@ describe("ProductList Component", () => {
         render(
             <ProductList
                 products={mockProducts}
+                searchQuery={""}
                 handleEdit={mockHandleEdit}
                 handleDelete={mockHandleDelete}
             />
@@ -65,6 +66,7 @@ describe("ProductList Component", () => {
     it("renders the correct number of products", () => {
         render(
             <ProductList
+                searchQuery={""}
                 products={mockProducts}
                 handleEdit={mockHandleEdit}
                 handleDelete={mockHandleDelete}

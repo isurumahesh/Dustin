@@ -30,9 +30,9 @@ namespace Dustin.API.Controllers
         // GET: api/<ProductsController>
         [HttpGet]
         [ProducesResponseType(typeof(List<ProductDTO>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
-            var products = await mediator.Send(new GetProductsQuery());
+            var products = await mediator.Send(new GetProductsQuery(), cancellationToken);
             return Ok(products);
         }
 

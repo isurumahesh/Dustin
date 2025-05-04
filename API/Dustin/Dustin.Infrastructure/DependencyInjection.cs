@@ -6,6 +6,9 @@ using Dustin.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Formatting.Json;
 
 namespace Dustin.Infrastructure
 {
@@ -30,6 +33,19 @@ namespace Dustin.Infrastructure
                         errorNumbersToAdd: null
                     );
                 });
+            });
+         
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)                
+                .MinimumLevel.Information()
+                .WriteTo.Console()
+                .WriteTo.File(new JsonFormatter(), "logs/log-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders(); 
+                loggingBuilder.AddSerilog(); 
             });
 
             services.AddMemoryCache();

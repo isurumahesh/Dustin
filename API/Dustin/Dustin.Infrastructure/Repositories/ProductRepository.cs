@@ -17,6 +17,7 @@ namespace Dustin.Infrastructure.Repositories
         public async Task<Product?> Get(Guid id)
         {
             return await _dbContext.Products
+                 .AsSplitQuery()
                 .Include(a => a.ProductItems)
                 .ThenInclude(a => a.ProductItemSubFeatures)
                 .ThenInclude(a => a.SubFeature)
@@ -30,6 +31,7 @@ namespace Dustin.Infrastructure.Repositories
         public async Task<List<Product>> GetAll()
         {
             return await _dbContext.Products
+                .AsSplitQuery()
                 .Include(a => a.ProductItems)
                 .ThenInclude(a => a.ProductItemSubFeatures)
                 .ThenInclude(a => a.SubFeature)

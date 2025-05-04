@@ -1,9 +1,9 @@
 ﻿namespace Dustin.Application.DTOs
 {
-    public class CreateProductDTO
+    public record CreateProductDTO
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = null!;
         public Guid BrandId { get; set; }
         public Guid SubCategoryId { get; set; }
 

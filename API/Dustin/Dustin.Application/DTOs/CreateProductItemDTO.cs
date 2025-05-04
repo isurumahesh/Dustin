@@ -1,8 +1,8 @@
 ﻿namespace Dustin.Application.DTOs
 {
-    public class CreateProductItemDTO
+    public record CreateProductItemDTO
     {
-        public string Sku { get; set; }
+        public string Sku { get; set; } = null!;
         public int Stock { get; set; }
         public decimal Price { get; set; }
 
